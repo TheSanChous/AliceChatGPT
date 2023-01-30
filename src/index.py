@@ -5,7 +5,7 @@ from json import dumps
 from threading import Thread
 
 
-def handler(request):
+def handler(request, context):
     response = {
         "response": {},
         "session": request['session']['session_id'],
