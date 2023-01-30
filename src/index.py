@@ -12,7 +12,7 @@ def handler(request, context):
         "version": request['version']
     }
     try:
-        if request["request"]["original_utterance"] is "":
+        if request["request"]["original_utterance"] == "":
             response["response"]['text'] = configuration["commands"]["greetings"]
             return dumps(response)
         if request["request"]["command"] in configuration["commands"]["GetResultCommands"]:
