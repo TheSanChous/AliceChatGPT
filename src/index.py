@@ -5,7 +5,7 @@ from json import dumps
 from threading import Thread
 
 
-def handler(request, context):
+def handler(request, context=None):
     response = {
         "response": {},
         "session": request['session']['session_id'],
@@ -13,7 +13,7 @@ def handler(request, context):
     }
     try:
         if request["request"]["original_utterance"] == "":
-            response["response"]['text'] = configuration["commands"]["greetings"]
+            response["response"]['text'] = configuration["responses"]["greetings"]
             return dumps(response)
         if request["request"]["command"] in configuration["commands"]["GetResultCommands"]:
             if request["state"]["session"] in [{}, {"last_request_key": None}]:
@@ -36,6 +36,6 @@ def handler(request, context):
 
         response.update({"session_state": {"last_request_key": current_request_key}})
         response["response"]["text"] = configuration["responses"]["request_created"]
-    except Exception:
+    except Exception as e:
         response["response"]["text"] = configuration["responses"]["internal_error"]
     return dumps(response)
