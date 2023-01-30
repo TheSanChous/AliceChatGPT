@@ -12,6 +12,9 @@ def handler(request, context):
         "version": request['version']
     }
     try:
+        if request["request"]["original_utterance"] is "":
+            response["response"]['text'] = configuration["commands"]["greetings"]
+            return dumps(response)
         if request["request"]["command"] in configuration["commands"]["GetResultCommands"]:
             if request["state"]["session"] in [{}, {"last_request_key": None}]:
                 response["response"]['text'] = configuration["responses"]["request_list_empty"]
